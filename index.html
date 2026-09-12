@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sarah 15 anos — Pool Party</title>
+<meta name="description" content="Convite de 15 anos da Sarah. Pool Party em 20/09/2026, das 13h30 às 18h30, na Rua Dr. João de Deus, 627 — Bairro de Fátima, Fortaleza.">
+<meta name="theme-color" content="#57507a">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sarah 15 anos — Pool Party">
+<meta property="og:description" content="20/09/2026 · 13h30 às 18h30 · Rua Dr. João de Deus, 627 — Bairro de Fátima. Toque para confirmar presença.">
+<meta property="og:image" content="preview.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+  *{box-sizing:border-box}
+
+  html,body{
+    height:100%;
+    margin:0;
+    overflow:hidden;
+  }
+
+  /* as duas cores são as bordas de cima e de baixo do próprio vídeo,
+     então a sobra da tela se funde com o convite */
+  body{
+    display:grid;
+    place-items:center;
+    background:linear-gradient(to bottom,#57507a 0 50%,#aa88a7 50% 100%);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .palco{
+    position:relative;
+    width:min(100vw, calc(100vh * 9 / 16));
+    width:min(100vw, calc(100svh * 9 / 16));
+    aspect-ratio:9/16;
+    overflow:hidden;
+  }
+
+  .palco video{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  /* ---------- capa ---------- */
+
+  .abrir{
+    position:absolute;
+    inset:0;
+    width:100%;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    padding:0 8% 15%;
+    border:0;
+    background:linear-gradient(to top, rgba(30,10,60,.72) 0%, rgba(30,10,60,.22) 34%, rgba(30,10,60,0) 58%);
+    font-family:"Cormorant Garamond",Georgia,serif;
+    font-size:clamp(1.6rem,7vw,2.4rem);
+    font-weight:500;
+    letter-spacing:.015em;
+    color:#fff;
+    text-align:center;
+    text-shadow:0 2px 16px rgba(30,10,60,.85);
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    transition:opacity .55s ease;
+    animation:respirar 2.8s ease-in-out infinite;
+  }
+
+  @keyframes respirar{
+    0%,100%{opacity:1}
+    50%    {opacity:.62}
+  }
+
+  .abrir:focus-visible{outline:3px solid #fff;outline-offset:-6px}
+
+  .palco.iniciado .abrir{
+    opacity:0;
+    pointer-events:none;
+    animation:none;
+  }
+
+  /* ---------- áreas clicáveis sobre os ícones do vídeo ---------- */
+
+  .toque{
+    position:absolute;
+    top:76.5%;
+    width:16%;
+    aspect-ratio:1;
+    transform:translate(-50%,-50%);
+    border:0;
+    padding:0;
+    border-radius:50%;
+    background:transparent;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .toque--presenca{left:37.6%}
+  .toque--local{left:62%}
+
+  .toque span{
+    position:absolute;
+    width:1px;height:1px;
+    overflow:hidden;
+    clip-path:inset(50%);
+    white-space:nowrap;
+  }
+
+  .toque::after{
+    content:"";
+    position:absolute;
+    inset:-9%;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.85);
+    opacity:0;
+    animation:chamar 2.6s ease-out infinite;
+  }
+  .toque--local::after{animation-delay:1.3s}
+
+  @keyframes chamar{
+    0%  {opacity:0;   transform:scale(.82)}
+    22% {opacity:.85; transform:scale(1)}
+    70% {opacity:0;   transform:scale(1.34)}
+    100%{opacity:0;   transform:scale(1.34)}
+  }
+
+  .toque:focus-visible{outline:3px solid #fff;outline-offset:4px}
+
+  /* enquanto o envelope abre, os ícones ainda não estão na tela */
+  .palco:not(.aberto) .toque{pointer-events:none}
+  .palco:not(.aberto) .toque::after{animation:none;opacity:0}
+
+  /* ---------- som ---------- */
+
+  .som{
+    position:absolute;
+    top:calc(14px + env(safe-area-inset-top));
+    right:14px;
+    display:none;
+    width:40px;height:40px;
+    align-items:center;
+    justify-content:center;
+    color:#2a0a4d;
+    background:rgba(255,255,255,.88);
+    border:0;
+    border-radius:50%;
+    cursor:pointer;
+    box-shadow:0 6px 18px -8px rgba(0,0,0,.6);
+  }
+  .palco.iniciado .som{display:inline-flex}
+  .som svg{width:19px;height:19px}
+  .som:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+  @media (prefers-reduced-motion:reduce){
+    .abrir,.toque::after{animation:none}
+    .toque::after{opacity:.5}
+  }
+</style>
+</head>
+<body>
+
+  <main class="palco" id="palco">
+    <video id="video" src="convite-sarah.mp4" poster="poster.jpg"
+           loop playsinline preload="auto"
+           aria-label="Convite animado de 15 anos da Sarah"></video>
+
+    <button class="abrir" id="abrir" type="button">Toque para abrir</button>
+
+    <button class="som" id="som" type="button" aria-pressed="true" aria-label="Ligar ou desligar o som">
+      <svg id="somIcone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+    </button>
+
+    <a class="toque toque--presenca"
+       href="https://wa.me/5585987934758?text=Confirmo%20minha%20presen%C3%A7a%20no%20anivers%C3%A1rio%20da%20Sarah."
+       target="_blank" rel="noopener">
+      <span>Confirmar presença pelo WhatsApp</span>
+    </a>
+
+    <a class="toque toque--local"
+       href="https://www.google.com/maps/search/?api=1&amp;query=-3.7455455%2C-38.5277097&amp;query_place_id=ChIJH4oh7h1JxwcRwsHkxEyJN7g"
+       target="_blank" rel="noopener">
+      <span>Ver a localização no mapa</span>
+    </a>
+  </main>
+
+<script>
+(function(){
+  var palco = document.getElementById('palco');
+  var video = document.getElementById('video');
+  var capa  = document.getElementById('abrir');
+  var som   = document.getElementById('som');
+  var icone = document.getElementById('somIcone');
+
+  var COM_SOM = '<path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>';
+  var SEM_SOM = '<path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6"/><path d="m16 9 6 6"/>';
+
+  function pintarSom(){
+    var ligado = !video.muted;
+    icone.innerHTML = ligado ? COM_SOM : SEM_SOM;
+    som.setAttribute('aria-pressed', ligado ? 'true' : 'false');
+  }
+
+  capa.addEventListener('click', function(){
+    palco.classList.add('iniciado');
+    video.muted = false;
+    video.volume = 1;
+
+    var tentativa = video.play();
+    if(tentativa && tentativa.catch){
+      tentativa.catch(function(){
+        video.muted = true;
+        pintarSom();
+        video.play().catch(function(){});
+      });
+    }
+    pintarSom();
+  });
+
+  som.addEventListener('click', function(){
+    video.muted = !video.muted;
+    if(!video.muted){ video.volume = 1; }
+    video.play().catch(function(){});
+    pintarSom();
+  });
+
+  // o envelope leva cerca de 6s para abrir
+  video.addEventListener('timeupdate', function(){
+    palco.classList.toggle('aberto', video.currentTime >= 6);
+  });
+
+  pintarSom();
+})();
+</script>
+</body>
+</html>
